@@ -1,18 +1,26 @@
 /**
- * iSTORE 2026 - ENGINE TOTAL (Med Modal Detaljer)
- * Sprog: Dansk | Kategorier: MacBook Pro, Air, iMac, Mini, iPhone, iPad
+ * iSTORE 2026 - ENGINE TOTAL
+ * Rettelse: Tilfældige produkter på forsiden & Forbedret Modal Design
  */
 
 const API_URL = 'https://www.datamarked.dk/?id=8016&apikey=7F39CE5E19D3F9413701DCF97D9F3E91897D9969222552C642229085587BAFF4';
 let alleProdukter = [];
 let nuvaerendeKategori = 'Alle';
 
-// Kategorier uden Mac Studio
 const appleKategorier = ['Alle', 'MacBook Pro', 'MacBook Air', 'iMac', 'Mac Mini', 'iPhone', 'iPad'];
+
+// Funktion til at blande produkterne
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
 // 1. HENT DATA FRA API
 async function hentProdukter() {
-    const grid = document.getElementById('productGrid');
+    const grid = document.getElementById('productGrid') || document.getElementById('homeProductGrid');
     if (grid) grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 50px;">Henter iStore katalog...</p>';
 
     try {
@@ -66,20 +74,23 @@ window.skiftKategori = (k) => {
 
 // 3. RENDER PRODUKT GRID
 function renderGrid() {
-    const grid = document.getElementById('productGrid');
+    const grid = document.getElementById('productGrid') || document.getElementById('homeProductGrid');
     if (!grid) return;
 
     const søgeord = document.getElementById('searchField')?.value.toLowerCase() || '';
     
-    const filtrerede = alleProdukter.filter(p => 
+    let filtrerede = alleProdukter.filter(p => 
         (nuvaerendeKategori === 'Alle' || p.kategori === nuvaerendeKategori) && 
         p.navn.toLowerCase().includes(søgeord)
     );
 
-    const erProduktside = document.getElementById('filterContainer');
-    const visning = erProduktside ? filtrerede : filtrerede.slice(0, 4);
+    // LOGIK: Tilfældige 4 på forsiden
+    if (grid.id === 'homeProductGrid') {
+        const blandet = shuffleArray([...filtrerede]); // Blander en kopi af listen
+        filtrerede = blandet.slice(0, 4);
+    }
 
-    grid.innerHTML = visning.map(p => `
+    grid.innerHTML = filtrerede.map(p => `
         <article class="product-card">
             <div class="img-wrapper">
                 <img src="${p.billede}" alt="${p.navn}">
@@ -87,17 +98,17 @@ function renderGrid() {
             <div class="product-info">
                 <span class="category-tag">${p.kategori}</span>
                 <h3>${p.navn}</h3>
-                <p class="price">Fra ${p.pris.toLocaleString('da-DK', {minimumFractionDigits: 2})} kr.</p>
+                <p class="price">Fra ${p.pris.toLocaleString('da-DK', {minimumFractionDigits: 0})} kr.</p>
                 <div class="card-buttons">
-                    <button class="btn-secondary" onclick="openModal('${encodeURIComponent(JSON.stringify(p))}')">Se detaljer</button>
-                    <a href="${p.link}" target="_blank" class="btn-primary">Køb nu</a>
+                    <button class="btn-secondary" onclick="openModal('${encodeURIComponent(JSON.stringify(p))}')">Detaljer</button>
+                    <a href="${p.link}" target="_blank" class="btn-primary">Køb</a>
                 </div>
             </div>
         </article>
     `).join('');
 }
 
-// 4. MODAL LOGIK
+// 4. MODAL LOGIK (Med forbedret design-struktur)
 window.openModal = (productData) => {
     const p = JSON.parse(decodeURIComponent(productData));
     const modal = document.getElementById('productModal');
@@ -105,30 +116,37 @@ window.openModal = (productData) => {
 
     if (!modal || !body) return;
 
+    // Her bygger vi det "flotte" modal layout
     body.innerHTML = `
-        <div class="modal-img">
-            <img src="${p.billede}" alt="${p.navn}">
+        <div class="modal-header-mobile">
+             <span class="close-modal" onclick="closeModal()">&times;</span>
         </div>
-        <div class="modal-info">
-            <span class="category-tag">${p.kategori}</span>
-            <h2>${p.navn}</h2>
-            <p class="modal-price">${p.pris.toLocaleString('da-DK', {minimumFractionDigits: 2})} kr.</p>
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-            <p class="modal-desc">
-                Denne ${p.navn} er en del af vores premium sortiment. 
-                Alle enheder gennemgår en omfattende kvalitetstest for at sikre, 
-                at du får den bedste Apple-oplevelse.
-            </p>
-            <ul style="margin: 20px 0; padding-left: 20px; color: #86868b; font-size: 0.9rem;">
-                <li>✓ 24 måneders reklamationsret</li>
-                <li>✓ Hurtig levering i hele Danmark</li>
-                <li>✓ Professionel support</li>
-            </ul>
-            <a href="${p.link}" target="_blank" class="btn-primary" style="display: block; text-align: center; width: 100%;">Gå til bestilling</a>
+        <div class="modal-grid">
+            <div class="modal-img-container">
+                <img src="${p.billede}" alt="${p.navn}">
+            </div>
+            <div class="modal-details">
+                <span class="modal-eyebrow">${p.kategori}</span>
+                <h2>${p.navn}</h2>
+                <p class="modal-price">${p.pris.toLocaleString('da-DK', {minimumFractionDigits: 0})} kr.</p>
+                
+                <div class="modal-divider"></div>
+                
+                <div class="modal-description">
+                    <p>Denne Apple enhed er nøje udvalgt og gennemtestet. Vi garanterer 100% funktionalitet og den velkendte Apple-oplevelse.</p>
+                    <ul>
+                        <li><span>✓</span> 2 års reklamationsret</li>
+                        <li><span>✓</span> Dag-til-dag levering</li>
+                        <li><span>✓</span> Batteritjekket & klargjort</li>
+                    </ul>
+                </div>
+                
+                <a href="${p.link}" target="_blank" class="btn-primary buy-btn">Læg i kurv</a>
+            </div>
         </div>
     `;
     modal.style.display = "flex";
-    document.body.style.overflow = "hidden"; // Stopper scroll bagved
+    document.body.style.overflow = "hidden";
 }
 
 window.closeModal = () => {
@@ -137,14 +155,31 @@ window.closeModal = () => {
     document.body.style.overflow = "auto";
 }
 
-// Luk modal ved klik udenfor
+// 5. MENU HAMBURGUER
+function initMenu() {
+    const header = document.querySelector('.header-grid');
+    if (!header) return;
+
+    if (!document.querySelector('.menu-toggle')) {
+        const btn = document.createElement('button');
+        btn.className = 'menu-toggle';
+        btn.innerHTML = '<span>☰</span>';
+        header.appendChild(btn);
+
+        btn.addEventListener('click', () => {
+            header.classList.toggle('nav-active');
+            document.body.style.overflow = header.classList.contains('nav-active') ? 'hidden' : '';
+        });
+    }
+}
+
 window.onclick = (event) => {
     const modal = document.getElementById('productModal');
     if (event.target == modal) closeModal();
 }
 
-// 5. INITIALISERING
 document.addEventListener('DOMContentLoaded', () => {
     hentProdukter();
+    initMenu();
     document.getElementById('searchField')?.addEventListener('input', renderGrid);
 });
