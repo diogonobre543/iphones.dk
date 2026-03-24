@@ -23,17 +23,22 @@ export default function Home() {
 
       <main>
         {/* HERO */}
-        <section className="home-hero">
-          <div className="container hero-content">
-            <span className="eyebrow">Velkommen</span>
-            <h1>Det bedste fra Apple.</h1>
-            <p>Find din næste iPhone, iPad eller Mac hos Danmarks foretrukne forhandler.</p>
-            <div className="hero-links">
-              <a href="/products" className="btn-primary">Se alle produkter</a>
-              <a href="/about" className="btn-link">Læs om iStore &gt;</a>
-            </div>
-          </div>
-        </section>
+   <section className="home-hero">
+  <div className="container hero-content">
+    <span className="eyebrow">Brugte Apple-produkter</span>
+    <h1>Brugte iPhones, iPads og MacBooks samlet ét sted</h1>
+    <p>
+  iPhones.dk samler brugte og refurbished Apple-produkter. 
+  Her finder du et udvalg af  <a href="https://www.datamarked.dk/billige-brugte-iphones_3130.html" title="Køb brugte iPhones">
+    brugte iPhones</a>, <a href="https://www.datamarked.dk/billige-brugte-ipads_1183.html" title="Køb brugte iPads">brugte iPads</a>, <a href="https://www.datamarked.dk/apple-macbook_1865.html" title="Køb brugte MacBooks">
+    MacBooks</a> og andet Apple-udstyr i høj kvalitet.
+</p>
+    <div className="hero-links">
+      <a href="/products" className="btn-primary">Se alle produkter</a>
+      <a href="/about" className="btn-link">Læs om iPhones.dk &gt;</a>
+    </div>
+  </div>
+</section>
 
         {/* FEATURED */}
         <section className="featured-section">
