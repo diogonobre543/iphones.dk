@@ -1,6 +1,8 @@
-/* ==========================================
-   iSTORE 2026 - DESIGN SYSTEM COMPLETO
-   ========================================== */
+/* ==========================================================================
+   iSTORE 2026 - DESIGN SYSTEM COMPLETO (FINAL)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
     --apple-black: #1d1d1f;
@@ -9,6 +11,8 @@
     --apple-card: #f5f5f7;
     --apple-blue: #0071e3;
     --apple-border: #d2d2d7;
+    --apple-orange: #bf4800;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,113 +22,201 @@ body {
     background: var(--apple-bg); 
     color: var(--apple-black); 
     -webkit-font-smoothing: antialiased; 
-    overflow-x: hidden; 
+    overflow-x: hidden;
+    line-height: 1.5;
 }
 
-.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.container { width: min(1200px, 92%); margin: 0 auto; }
 
 /* 1. HEADER & NAVIGATION */
 .site-header {
-    background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px);
-    position: sticky; top: 0; z-index: 1000; padding: 15px 0; border-bottom: 0.5px solid rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.8); 
+    backdrop-filter: saturate(180%) blur(20px);
+    position: sticky; top: 0; z-index: 1000; 
+    padding: 15px 0; 
+    border-bottom: 0.5px solid rgba(0,0,0,0.1);
 }
+
 .header-grid { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-size: 1.4rem; font-weight: 600; text-decoration: none; color: var(--apple-black); z-index: 1001; }
+
+.logo { 
+    font-size: 1.4rem; font-weight: 600; text-decoration: none; 
+    color: var(--apple-black); letter-spacing: -0.03em;
+}
 
 .main-nav { display: flex; gap: 30px; }
-.main-nav a { font-size: 0.9rem; text-decoration: none; color: var(--apple-black); opacity: 0.8; transition: 0.2s; }
-.main-nav a.active { opacity: 1; font-weight: 600; }
+.main-nav a { 
+    font-size: 0.9rem; text-decoration: none; color: var(--apple-black); 
+    opacity: 0.7; transition: var(--transition); 
+}
+.main-nav a:hover, .main-nav a.active { opacity: 1; font-weight: 600; }
 
-/* ESCONDER HAMBÚRGUER NO PC */
-.menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; z-index: 1001; }
-.menu-toggle span { font-size: 28px; color: var(--apple-black); }
+.menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1001; font-size: 24px; }
 
 /* 2. HERO SECTION */
-.home-hero { padding: 80px 0; text-align: center; }
-.home-hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 15px; }
-.home-hero p { font-size: 1.4rem; color: var(--apple-gray); margin-bottom: 30px; }
-.hero-links { display: flex; justify-content: center; align-items: center; gap: 25px; }
+.home-hero { padding: 80px 0 60px; text-align: center; }
+.home-hero h1 { 
+    font-size: clamp(2.5rem, 8vw, 4.2rem); font-weight: 700; 
+    letter-spacing: -0.04em; margin-bottom: 20px; 
+}
+.home-hero p { 
+    font-size: 1.5rem; color: var(--apple-gray); margin-bottom: 40px; 
+    max-width: 700px; margin: 0 auto 40px;
+}
 
-.btn-primary { background: var(--apple-blue); color: #fff; padding: 14px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; transition: 0.3s; border: none; display: inline-block; }
-.btn-primary:hover { background: #0077ed; }
-.btn-link { color: var(--apple-blue); text-decoration: none; font-size: 1.1rem; }
-.btn-link:hover { text-decoration: underline; }
+/* BOTÕES ESTILO APPLE */
+.btn-primary { 
+    background: var(--apple-blue); color: #fff; padding: 14px 32px; 
+    border-radius: 30px; text-decoration: none; font-weight: 600; 
+    transition: var(--transition); border: none; display: inline-block; cursor: pointer;
+    text-align: center;
+}
+.btn-primary:hover { background: #0077ed; transform: scale(1.02); }
 
-/* 3. FILTROS & BUSCA (Página de Produtos) */
-.filter-bar { background: #fff; padding: 20px 0; border-bottom: 1px solid var(--apple-border); position: sticky; top: 60px; z-index: 999; }
-.filter-wrapper { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
-.filter-wrapper::-webkit-scrollbar { display: none; }
+.btn-secondary { 
+    background: #e8e8ed; color: var(--apple-blue); flex: 1; 
+    padding: 12px; border-radius: 20px; border: none; 
+    font-weight: 600; cursor: pointer; transition: 0.2s; 
+}
+.btn-secondary:hover { background: #d2d2d7; }
+
+/* 3. GRID DE PRODUTOS (VITRINE) */
+.apple-grid { 
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 25px; padding: 40px 0 80px; 
+}
+
+.product-card { 
+    background: var(--apple-card); border-radius: 28px; padding: 30px; 
+    display: flex; flex-direction: column; transition: var(--transition); text-align: center;
+}
+.product-card:hover { 
+    transform: translateY(-8px); background: #fff; 
+    box-shadow: 0 25px 50px rgba(0,0,0,0.06); 
+}
+
+.img-wrapper { 
+    height: 220px; display: flex; align-items: center; justify-content: center; 
+    margin-bottom: 20px; mix-blend-mode: multiply;
+}
+.img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.category-tag { font-size: 0.75rem; font-weight: 700; color: var(--apple-orange); text-transform: uppercase; margin-bottom: 8px; display: block; }
+.product-info h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.02em; }
+.price { color: var(--apple-gray); font-size: 1rem; margin-bottom: 20px; }
+.card-buttons { display: flex; gap: 10px; margin-top: auto; }
+
+/* 4. MODAL (CORREÇÃO DE LAYOUT) */
+.modal { 
+    display: none; position: fixed; inset: 0; 
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); 
+    z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+}
+
+.modal-content { 
+    background: #fff; width: 100%; max-width: 900px; 
+    border-radius: 32px; position: relative; overflow: hidden; 
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* Importante: modal-grid agora controla a divisão interna */
+.modal-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    min-height: 500px; 
+}
+
+.modal-img-container { 
+    background: var(--apple-card); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 40px; 
+}
+.modal-img-container img { 
+    max-width: 100%; 
+    max-height: 400px; 
+    object-fit: contain; 
+    mix-blend-mode: multiply; 
+}
+
+.modal-details { padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+.modal-eyebrow { font-size: 0.8rem; font-weight: 700; color: var(--apple-orange); text-transform: uppercase; }
+.modal-price { font-size: 1.8rem; font-weight: 600; margin: 15px 0; color: var(--apple-blue); }
+.modal-divider { height: 1px; background: var(--apple-border); margin: 20px 0; }
+.modal-description { margin-bottom: 30px; font-size: 0.95rem; color: var(--apple-gray); }
+.modal-description ul { list-style: none; margin-top: 15px; }
+.modal-description li { margin-bottom: 8px; color: var(--apple-black); display: flex; align-items: center; }
+.modal-description span { color: #00cc00; margin-right: 8px; font-weight: bold; }
+
+.close-modal { 
+    position: absolute; top: 20px; right: 25px; font-size: 35px; 
+    border: none; background: none; cursor: pointer; color: var(--apple-gray); z-index: 10; 
+}
+
+/* 5. PÁGINA DE DETALHES (DETAIL.HTML) */
+.detail-wrapper { padding: 40px 0 80px; }
+.detail-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+
+.detail-image-box {
+    background: var(--apple-card); border-radius: 30px;
+    padding: 60px; display: flex; align-items: center; justify-content: center;
+}
+.detail-image-box img { max-width: 100%; max-height: 550px; object-fit: contain; }
+
+.detail-info h1 { font-size: 3.2rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 15px; }
+.detail-price { font-size: 2.2rem; font-weight: 600; color: var(--apple-blue); margin-bottom: 30px; }
+
+/* 6. FILTROS & BUSCA */
+#filterContainer { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 30px; }
 
 .apple-filter-btn {
-    background: var(--apple-card); border: none; padding: 10px 22px; border-radius: 20px;
-    font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: 0.2s; white-space: nowrap;
+    background: #f5f5f7; border: 1px solid transparent; padding: 10px 18px; 
+    border-radius: 20px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: var(--transition);
 }
 .apple-filter-btn.active { background: var(--apple-black); color: #fff; }
 
-.search-container { margin: 30px 0; }
-.apple-search {
-    width: 100%; padding: 18px 25px; border-radius: 15px; border: 1px solid var(--apple-border);
-    background: var(--apple-card); font-size: 1rem; outline: none; transition: 0.3s;
+.search-container { margin-bottom: 20px; }
+#searchField {
+    width: 100%; max-width: 350px; padding: 12px 18px; border-radius: 20px; 
+    border: 1px solid var(--apple-border); background: #f5f5f7; outline: none; transition: var(--transition);
 }
-.apple-search:focus { background: #fff; border-color: var(--apple-blue); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); }
+#searchField:focus { background: #fff; border-color: var(--apple-blue); }
 
-/* 4. GRID DE PRODUTOS */
-.apple-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 40px 0; }
-.product-card { background: var(--apple-card); border-radius: 22px; padding: 30px; display: flex; flex-direction: column; transition: 0.3s; border: 1px solid transparent; }
-.product-card:hover { transform: translateY(-5px); background: #fff; border-color: rgba(0,0,0,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
+/* 7. FOOTER */
+.apple-footer { background: #1d1d1f; color: white; padding: 60px 0; text-align: center; margin-top: 100px; }
+.apple-footer p { opacity: 0.6; font-size: 0.9rem; }
 
-.img-wrapper { height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-.img-wrapper img { max-width: 90%; max-height: 90%; object-fit: contain; }
+/* 8. RESPONSIVIDADE */
+@media (max-width: 900px) {
+    .modal-grid, .detail-grid { grid-template-columns: 1fr; }
+    .modal-img-container, .detail-image-box { height: 350px; padding: 30px; }
+    .modal-details, .detail-info { padding: 30px; text-align: center; }
+}
 
-.eyebrow { font-size: 0.75rem; font-weight: 700; color: #bf4800; text-transform: uppercase; margin-bottom: 8px; display: block; }
-.product-info h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 10px; }
-
-.card-buttons { display: flex; gap: 10px; margin-top: auto; padding-top: 15px; }
-.btn-secondary { background: #e8e8ed; color: var(--apple-blue); flex: 1; padding: 12px; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
-.btn-secondary:hover { background: #d2d2d7; }
-
-/* 5. MODAL */
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); z-index: 2000; align-items: center; justify-content: center; }
-.modal-content { background: #fff; width: 90%; max-width: 850px; padding: 50px; border-radius: 30px; position: relative; }
-.modal-grid { display: flex; gap: 40px; align-items: center; }
-.modal-img { flex: 1; text-align: center; }
-.modal-img img { width: 100%; border-radius: 20px; }
-.modal-info { flex: 1.2; }
-.modal-price { font-size: 2rem; font-weight: 600; margin: 15px 0; }
-.meta-box { display: flex; gap: 20px; background: var(--apple-card); padding: 15px; border-radius: 12px; margin: 20px 0; }
-.meta-item span { display: block; font-size: 0.7rem; color: var(--apple-gray); text-transform: uppercase; }
-.buy-now-btn { display: block; background: var(--apple-blue); color: white; text-align: center; padding: 16px; border-radius: 14px; text-decoration: none; font-weight: 600; }
-.close-modal { position: absolute; top: 20px; right: 25px; font-size: 35px; border: none; background: none; cursor: pointer; color: #ccc; }
-
-/* 6. FOOTER DARK */
-.apple-footer { background: #1d1d1f; color: white; padding: 60px 0; text-align: center; margin-top: 60px; }
-.apple-footer a { color: var(--apple-blue); text-decoration: none; }
-.footer-info { opacity: 0.6; font-size: 0.85rem; margin-top: 20px; line-height: 1.6; }
-
-/* ==========================================
-   7. RESPONSIVIDADE (MOBILE)
-   ========================================== */
 @media (max-width: 768px) {
-    .menu-toggle { display: block !important; }
-    
-    .main-nav {
-        position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-        background: #ffffff; flex-direction: column; align-items: center; justify-content: center;
-        z-index: 1000; gap: 40px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .nav-active .main-nav { right: 0; }
-    .nav-active .open-icon { display: none; }
-    .nav-active .close-icon { display: block !important; }
-    .main-nav a { font-size: 1.8rem; font-weight: 500; }
+    .menu-toggle { display: block; }
+    .main-nav { display: none; }
+}
+.detail-description {
+    margin: 20px 0 30px;
+    font-size: 0.95rem;
+    color: var(--apple-gray);
+}
 
-    /* HERO LINKS (BOTÃO AZUL LARGO - A TUA FOTO) */
-    .hero-links { flex-direction: column !important; gap: 20px; width: 100%; padding: 0 20px; }
-    .btn-primary { width: 100%; max-width: 320px; padding: 18px; font-size: 1.1rem; text-align: center; }
-    
-    /* GRID & MODAL */
-    .apple-grid { grid-template-columns: 1fr; gap: 15px; }
-    .modal-grid { flex-direction: column; text-align: center; }
-    .modal-content { padding: 30px; }
-    .card-buttons { flex-direction: column; }
+.detail-description ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.detail-description li {
+    margin-bottom: 6px;
+    color: var(--apple-black);
+}
+.detail-description li span {
+    color: #00cc00;
+    margin-right: 6px;
+    font-weight: bold;
 }

@@ -11,6 +11,9 @@
     <header class="site-header">
         <div class="container header-grid">
             <a href="index.html" class="logo">iStore</a>
+            
+            <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+
             <nav class="main-nav">
                 <a href="index.html" class="active">Forside</a>
                 <a href="products.html">Produkter</a>
@@ -35,10 +38,8 @@
         <section class="featured-section">
             <div class="container">
                 <h2 class="section-title">Udvalgte modeller</h2>
-                
                 <div id="homeProductGrid" class="apple-grid"></div>
-
-                <div class="view-more-container" style="text-align: center; margin-top: 40px;">
+                <div style="text-align: center; margin-top: 60px;">
                     <a href="products.html" class="btn-secondary">Se hele udvalget</a>
                 </div>
             </div>
@@ -47,8 +48,7 @@
 
     <div id="productModal" class="modal">
         <div class="modal-content">
-            <div id="modalBody">
-                </div>
+            <div id="modalBody"></div>
         </div>
     </div>
 
@@ -61,3 +61,38 @@
     <script src="Assets/script.js"></script>
 </body>
 </html>
+<div style="display: flex; flex-wrap: wrap; background-color: #222; color: #fff; font-family: Arial, sans-serif; padding: 20px; gap: 40px; line-height: 1.6;">
+    
+    <div style="flex: 1; min-width: 200px;">
+        <p style="margin: 0;"><strong>Datamarked ApS</strong><br>
+        Østre Fælledvej 16<br>
+        9400 Nørresundby</p>
+        
+        <p style="margin-top: 15px;">
+            <span style="color: #fff;">📞</span> <a href="tel:+4570400010" style="color: #a4c639; text-decoration: none;">+45 70 40 00 10</a><br>
+            <span style="color: #fff;">✉️</span> <a href="mailto:salg@datamarked.dk" style="color: #a4c639; text-decoration: none;">salg@datamarked.dk</a>
+        </p>
+    </div>
+
+    <div style="flex: 1; min-width: 200px;">
+        <h3 style="margin-top: 0; font-size: 1.1em;">Butikkens åbningstider</h3>
+        <table style="border-collapse: collapse; width: 100%;">
+            <tr><td style="padding-right: 15px;">Mandag</td><td>12:00 - 16:00</td></tr>
+            <tr><td>Tirsdag</td><td>12:00 - 16:00</td></tr>
+            <tr><td>Onsdag</td><td>12:00 - 16:00</td></tr>
+            <tr><td>Torsdag</td><td>12:00 - 16:00</td></tr>
+            <tr><td>Fredag</td><td>12:00 - 15:00</td></tr>
+        </table>
+    </div>
+
+    <div style="flex: 1; min-width: 200px;">
+        <h3 style="margin-top: 0; font-size: 1.1em;">Kundeservice</h3>
+        <table style="border-collapse: collapse; width: 100%;">
+            <tr><td style="padding-right: 15px;">Mandag</td><td>9:00 - 16:00</td></tr>
+            <tr><td>Tirsdag</td><td>9:00 - 16:00</td></tr>
+            <tr><td>Onsdag</td><td>9:00 - 16:00</td></tr>
+            <tr><td>Torsdag</td><td>9:00 - 16:00</td></tr>
+            <tr><td>Fredag</td><td>9:00 - 15:00</td></tr>
+        </table>
+    </div>
+</div>
