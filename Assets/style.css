@@ -1,5 +1,5 @@
-/* ==========================================================================
-   iSTORE 2026 - DESIGN SYSTEM COMPLETO (FINAL)
+/* ========================================================================== 
+   iSTORE 2026 - DESIGN SYSTEM COMPLETO CORRIGIDO
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -82,31 +82,74 @@ body {
 
 /* 3. GRID DE PRODUTOS (VITRINE) */
 .apple-grid { 
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 25px; padding: 40px 0 80px; 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 25px; padding: 40px 0 80px;
+    grid-auto-rows: 1fr; /* força altura uniforme por linha */
 }
 
-.product-card { 
-    background: var(--apple-card); border-radius: 28px; padding: 30px; 
-    display: flex; flex-direction: column; transition: var(--transition); text-align: center;
-}
-.product-card:hover { 
-    transform: translateY(-8px); background: #fff; 
-    box-shadow: 0 25px 50px rgba(0,0,0,0.06); 
+.apple-grid > .product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* empurra botões para baixo */
+    background: var(--apple-card);
+    border-radius: 28px;
+    padding: 30px;
+    transition: var(--transition);
 }
 
-.img-wrapper { 
-    height: 220px; display: flex; align-items: center; justify-content: center; 
-    margin-bottom: 20px; mix-blend-mode: multiply;
+.product-card:hover {
+    transform: translateY(-8px);
+    background: #fff;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.06);
 }
-.img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-.category-tag { font-size: 0.75rem; font-weight: 700; color: var(--apple-orange); text-transform: uppercase; margin-bottom: 8px; display: block; }
-.product-info h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.02em; }
-.price { color: var(--apple-gray); font-size: 1rem; margin-bottom: 20px; }
-.card-buttons { display: flex; gap: 10px; margin-top: auto; }
+/* IMAGEM DO PRODUTO */
+.img-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    height: 220px;
+}
+.img-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
 
-/* 4. MODAL (CORREÇÃO DE LAYOUT) */
+/* INFORMAÇÃO DO PRODUTO */
+.category-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--apple-orange);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.product-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    min-height: 42px; /* garante alinhamento */
+}
+.price {
+    color: var(--apple-gray);
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* BOTÕES NO FUNDO */
+.card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.card-buttons .btn-primary,
+.card-buttons .btn-secondary {
+    width: 100%;
+}
+
+/* 4. MODAL */
 .modal { 
     display: none; position: fixed; inset: 0; 
     background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); 
@@ -121,7 +164,6 @@ body {
 
 @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* Importante: modal-grid agora controla a divisão interna */
 .modal-grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
@@ -156,9 +198,9 @@ body {
     border: none; background: none; cursor: pointer; color: var(--apple-gray); z-index: 10; 
 }
 
-/* 5. PÁGINA DE DETALHES (DETAIL.HTML) */
+/* 5. PÁGINA DE DETALHES */
 .detail-wrapper { padding: 40px 0 80px; }
-.detail-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+.detail-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
 
 .detail-image-box {
     background: var(--apple-card); border-radius: 30px;
@@ -166,8 +208,14 @@ body {
 }
 .detail-image-box img { max-width: 100%; max-height: 550px; object-fit: contain; }
 
+.detail-info { display: flex; flex-direction: column; }
 .detail-info h1 { font-size: 3.2rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 15px; }
 .detail-price { font-size: 2.2rem; font-weight: 600; color: var(--apple-blue); margin-bottom: 30px; }
+
+.detail-description { margin: 20px 0 30px; font-size: 0.95rem; color: var(--apple-gray); }
+.detail-description ul { list-style: none; margin-top: 10px; }
+.detail-description li { margin-bottom: 6px; color: var(--apple-black); }
+.detail-description li span { color: #00cc00; margin-right: 6px; font-weight: bold; }
 
 /* 6. FILTROS & BUSCA */
 #filterContainer { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 30px; }
@@ -199,24 +247,4 @@ body {
 @media (max-width: 768px) {
     .menu-toggle { display: block; }
     .main-nav { display: none; }
-}
-.detail-description {
-    margin: 20px 0 30px;
-    font-size: 0.95rem;
-    color: var(--apple-gray);
-}
-
-.detail-description ul {
-    list-style: none;
-    margin-top: 10px;
-}
-
-.detail-description li {
-    margin-bottom: 6px;
-    color: var(--apple-black);
-}
-.detail-description li span {
-    color: #00cc00;
-    margin-right: 6px;
-    font-weight: bold;
 }
